@@ -1,0 +1,150 @@
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner num = new Scanner(System.in);
+        ///////////////////////////////////////////////////////////////////
+        System.out.println("////////////////////////////////////////////");
+        System.out.println("\t\t---Лабораторна робота №1---");
+        System.out.println("\t\t\t---Список завдань---");
+        System.out.println("---Завдання №1, для перегляду натисніть 1---");
+        System.out.println("---Завдання №2, для перегляду натисніть 2---");
+        System.out.println("---Завдання №3, для перегляду натисніть 3---");
+        System.out.println("---Завдання №4, для перегляду натисніть 4---");
+        System.out.println("////////////////////////////////////////////");
+        int num_of_zavdanie=0;
+        System.out.print("Ведіть номер завдання:");
+        num_of_zavdanie = num.nextInt();
+        switch (num_of_zavdanie)
+        {
+            case 1:
+                System.out.println("\t---Завдання №1---");
+                float c=0, b=0;
+                System.out.print("Ведіть число а(2 або 4 або 6):");
+                int a = num.nextInt();
+                System.out.print("Ведіть число c:");
+                c = num.nextFloat();
+                System.out.println("\t---Виберить спосіб розгалуження (if)---");
+                System.out.println("---Натисніть 1 для використання скороченої форми---");
+                System.out.println("---Натисніть 2 для використання скороченої повної форми---");
+                System.out.print("Ведіть цифру:");
+                int vibor_zav1=0;
+                vibor_zav1 = num.nextInt();
+                if(vibor_zav1==1)
+                {
+                if(a==2)
+                    System.out.println("Значення функції b=" + (b=a*a-4*c/a*c));
+                if(a==4)
+                    System.out.println("Значення функції b=" + (Math.sqrt(a*c-2*a)));
+                if(a==6)
+                    System.out.println("Значення функції b=" + (c*c-2*a));
+                if(a==0)
+                    System.out.println("Значення функції b=" + (b=a));
+                }
+                else if(vibor_zav1==2)
+                {
+                if(a==2)
+                    System.out.println("Значення функції b=" + (b=a*a-4*c/a*c));
+                else if(a==4)
+                    System.out.println("Значення функції b=" + (Math.sqrt(a*c-2*a)));
+                else if(a==6)
+                    System.out.println("Значення функції b=" + (c*c-2*a));
+                else if(a==0)
+                    System.out.println("Значення функції b=" + (b=a));
+                }
+                System.out.println("////////////////////////////////////////////");
+                break;
+            case 2:
+                System.out.println("\t---Завдання №2---");
+                long x=0, y=0;
+                System.out.print("Ведіть координату x: ");
+                x = num.nextLong();
+                System.out.print("Ведіть координату y: ");
+                y = num.nextLong();
+                if(x==0 && y==0)
+                    System.out.print("Дана точка не належить жодному квадранту");
+                else
+                {
+                if(x>0)
+                {
+                    if (y > 0)
+                    {
+                        System.out.print("Точка А має координати(" + x + "," + y + ") :I квадрант");
+                    }
+                    else
+                    {
+                        System.out.print("Точка А має координати(" + x + "," + y + ") :IV квадрант");
+                    }
+                }
+                else
+                {
+                    if(y>0)
+                    {
+                        System.out.print("Точка А має координати(" + x + "," + y + ") :II квадрант");
+                    }
+                    else
+                    {
+                        System.out.print("Точка А має координати(" + x + "," + y + ") :III квадрант");
+                    }
+                }
+                }
+                System.out.println("\n////////////////////////////////////////////");
+                break;
+            case 3:
+                System.out.println("\t---Завдання №3---");
+                Scanner str = new Scanner(System.in);
+                String sourname;
+                System.out.print("Ведіть Прізвище Студента:");
+                sourname = str.nextLine();
+            switch (sourname)
+            {
+                case "Безушко": case "Токар":
+                    System.out.print("Ім'я цього студента:" + " Максим");
+                    break;
+                case "Зайцев":
+                    System.out.print("Ім'я цього студента:" + " Артем");
+                    break;
+                case "Мадяр": case "Рацой": case "Савицький":
+                    System.out.print("Ім'я цього студента:" + " Олександр");
+                    break;
+                case "Шемкович":
+                    System.out.print("Ім'я цього студента:" + " Сергій");
+                    break;
+                case "Флорескул":
+                    System.out.print("Ім'я цього студента:" + " Антон");
+                    break;
+                default:
+                    System.out.print("Такого студента немаэ в базі(*_*)");
+                    break;
+            }
+                System.out.println("\n////////////////////////////////////////////");
+            break;
+            case 4:
+                System.out.println("\t---Завдання №4---");
+                double f=0;
+                System.out.print("Ведыть число x:");
+                float x1=num.nextFloat();
+                System.out.print("Ведыть число y:");
+                float y1=num.nextFloat();
+                try {
+                    if((f = Math.pow(x1, 2)+ Math.log(2)*x1*y1-Math.pow(y1, 2)+Math.pow(x1, 2)+Math.pow(y1, 2))==0)
+                    throw new ArithmeticException("Введено не коректні значення!");
+                }
+                catch (ArithmeticException e)
+                {
+                    System.err.println("Введено не коректні значення!");
+                    break;
+                }
+                System.out.println("Значення f:" + f);
+                System.out.println("////////////////////////////////////////////");
+                break;
+            default:
+                System.out.print("Такого завдання немає!");
+                break;
+
+        }
+    }
+}
