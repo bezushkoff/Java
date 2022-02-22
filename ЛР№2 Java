@@ -1,0 +1,165 @@
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    static void Tmenu()
+    {
+        System.out.println("////////////////////////////////////////////");
+        System.out.println("\t\t---Лабораторна робота №2---");
+        System.out.println("\t\t\t---Список завдань---");
+        System.out.println("---Завдання №1, для перегляду натисніть 1---");
+        System.out.println("---Завдання №2, для перегляду натисніть 2---");
+        System.out.println("---Завдання №3, для перегляду натисніть 3---");
+        System.out.println("---Завдання №4, для перегляду натисніть 4---");
+        System.out.println("---Для завершення роботи натисніть 5--");
+        System.out.println("////////////////////////////////////////////");
+        System.out.print("Введіть номер завдання:");
+    }
+
+   static float Sum(int n, int x)
+    {
+        float sum=0;
+        for(int i=1; i<=n; i++)
+        {
+            for(int j=2; j<=n; j++)
+            {
+                float t= x+i+j;
+                sum+=t;
+            }
+        }
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        Scanner num = new Scanner(System.in);
+        int num_of_zavdanie=0;
+        Tmenu();
+        boolean run=true;
+
+        while(run)
+        {
+            run=false;
+            num_of_zavdanie = num.nextInt();
+        switch (num_of_zavdanie)
+        {
+            case 1:
+                System.out.println("\t---Завдання №1---");
+                int x,y,z;
+                double a=0;
+                System.out.print("Введіть число x:");
+                x=num.nextInt();
+                System.out.print("Введіть число y:");
+                y=num.nextInt();
+                System.out.print("Введіть число z:");
+                z=num.nextInt();
+                try
+                {
+                if((a=Math.sqrt(x*x*y-z)+Math.log(2)*(x+y+z))==0)
+                    throw new ArithmeticException("Введено не коректны значення!");
+                }
+                catch (ArithmeticException e)
+                {
+                    System.err.println("Введено не коректны значення!");
+                    break;
+                }
+                System.out.printf("Результат: " + "%.2f",a);
+                System.out.println("////////////////////////////////////////////");
+                break;
+            case 2:
+                System.out.println("\t---Завдання №2---");
+                int s=0, count =0;
+                for(int i = 1; i<=100; i++)
+                {
+                    if(i%2==0)
+                    {
+                        s+=i;
+                        count++;
+                    }
+                }
+                int ss=0, countt =0;
+                int ii=1;
+                while (ii<=100)
+                {
+                    if(ii%2==0)
+                    {
+                        ss+=ii;
+                        countt++;
+                    }
+                    ii++;
+                }
+                int sss=0, counttt=0;
+                int iii=1;
+                do
+                {
+                    if(iii%2==0)
+                    {
+                        sss+=iii;
+                        counttt++;
+                    }
+                    iii++;
+                }
+                while(iii<=100);
+                System.out.println("Результат з використанням циклу з параметром: "+ s / count);
+                System.out.println("Результат з використанням циклу з передумовою: "+ ss / countt);
+                System.out.println("Результат з використанням циклу з пісялумовою: "+ sss / counttt);
+                System.out.println("////////////////////////////////////////////");
+                break;
+            case 3:
+                System.out.println("\t---Завдання №3---");
+                int n,x3;
+                System.out.print("Введіть число x:");
+                x3=num.nextInt();
+                System.out.print("Введіть число n:");
+                n=num.nextInt();
+                try
+                {
+                    if((Sum(n,x3))==0)
+                        throw new ArithmeticException("Введено не коректны значення!");
+                }
+                catch (ArithmeticException e)
+                {
+                    System.err.println("Введено не коректны значення!");
+                    break;
+                }
+                System.out.println("Результат: " + Sum(n, x3));
+                break;
+            case 4:
+                System.out.println("\t---Завдання №4---");
+                int a4=3;
+                int b4=6;
+                double f=0;
+                float dx = 0.5f;
+                System.out.println("Функцїя: y=e^2x*x^2");
+                for(float x0=a4; x0<=b4; x0+=dx)
+                {
+                    f = Math.exp(2*x0)*Math.pow(x0,2);
+                    System.out.println("x: "+x0 +"\t f: " + Math.floor(f));
+                }
+                break;
+            case 5:
+                System.out.println("\t\t\t---Кінець---");
+                System.out.println("////////////////////////////////////////////");
+                break;
+            default:
+                System.out.println("---Такого номеру завдання немає---");
+                System.out.println("---Для повторного введення натисніть 1, для закінчення роботи натисніть 2---");
+                System.out.print("Введіть цифру:");
+                int i=0;
+                i=num.nextInt();
+                if(i==1)
+                {
+                    run=true;
+                    Tmenu();
+                }
+                else
+                {
+                    System.out.println("\t\t\t---Кінець---");
+                System.out.println("////////////////////////////////////////////");
+                break;
+                }
+        }
+    }
+    }
+}
