@@ -1,0 +1,192 @@
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    static void Tmenu()
+    {
+        System.out.println("////////////////////////////////////////////");
+        System.out.println("\t\t---Лабораторна робота №3---");
+        System.out.println("\t\t\t---Список завдань---");
+        System.out.println("---Завдання №1, для перегляду натисніть 1---");
+        System.out.println("---Завдання №2, для перегляду натисніть 2---");
+        System.out.println("---Для завершення роботи натисніть 3--");
+        System.out.println("////////////////////////////////////////////");
+        System.out.print("Введіть номер завдання:");
+    }
+
+    public static void main(String[] args) {
+       Scanner num = new Scanner(System.in);
+       int num_of_zavdanie =0;
+       Tmenu();
+       boolean run = true;
+       while(run)
+       {
+           run = false;
+           num_of_zavdanie = num.nextInt();
+           switch (num_of_zavdanie)
+           {
+               case 1:
+                   System.out.println("\t---Завдання №1---");
+                   int n;
+                   System.out.print("Введіть розмір масивів:");
+                   n = num.nextInt();
+
+                   int [] arr1 = new int[n];
+                   int [] arr2 = new int[n];
+                   int [] arr3 = new int[n];
+
+                   System.out.println("Введення першого масиву:");
+                   for(int i=0; i<n; i++)
+                   {
+                       arr1[i] = num.nextInt();
+                   }
+                   System.out.println("Виведення масиву:");
+                   for(int i=0; i<n; i++)
+                   {
+                       System.out.print(arr1[i]+" ");
+                   }
+
+                   System.out.println("\nВведення другого масиву:");
+                   for(int i=0; i<n; i++)
+                   {
+                       arr2[i] = num.nextInt();
+                   }
+                   System.out.println("Виведення масиву:");
+                   for(int i=0; i<n; i++)
+                   {
+                       System.out.print(arr2[i]+" ");
+                   }
+                   try
+                   {
+                       for(int i=0; i<n; i++)
+                       {
+                         if(arr1[i]<arr2[i])
+                         {
+                             throw new ArithmeticException("\nВведено не коректні значення!");
+                         }
+                       }
+                   }
+                   catch (ArithmeticException e)
+                   {
+                       System.err.println("\nВведено не коректні значення!");
+                       break;
+                   }
+
+                   System.out.println("\nРізниця масивів:");
+                   for(int i=0; i<n; i++)
+                   {
+                       arr3[i] = arr1[i]-arr2[i];
+                   }
+                   System.out.println("Результат:");
+                   for(int i=0; i<n; i++)
+                   {
+                       System.out.print(arr3[i]+" ");
+                   }
+                   System.out.println("\n////////////////////////////////////////////");
+                   break;
+               case 2:
+                   System.out.println("\t---Завдання №2---");
+                   int m;
+                   System.out.print("Введіть розмір масивів:");
+                   m = num.nextInt();
+
+                   int[] arrKey = new int[m];
+                   int[] arrRand = new int[m];
+
+                   System.out.println("Введення першого масиву:");
+                   for(int i=0; i<m; i++)
+                   {
+                       arrKey[i] = num.nextInt();
+                   }
+                   System.out.println("Виведення масиву:");
+                   for(int i=0; i<m; i++)
+                   {
+                       System.out.print(arrKey[i]+" ");
+                   }
+                   int min = arrKey[0];
+                   for(int i = 0; i < m; i++)
+                   {
+                       if(arrKey[i]<min)
+                       {
+                           min = arrKey[i];
+                       }
+                   }
+                   System.out.println("Результат:");
+                   System.out.println("Мінімальне значення масива: "+ min);
+
+                   System.out.println("\nВведення другого масиву (Рандомно):");
+                   for(int i=0; i<m; i++)
+                   {
+                       arrRand[i] = ((int)(Math.random()*101) - (int)(Math.random()*101));
+                   }
+                   System.out.println("Виведення масиву:");
+                   for(int i=0; i<m; i++)
+                   {
+                       System.out.print(arrRand[i]+" ");
+                   }
+                   int first=0, firstindex=0;
+                   int exit =1;
+                   for(int i=0; i < m; i++)
+                   {
+                       if(arrRand[i]<0)
+                       {
+                           first = arrRand[i];
+                           firstindex = i;
+                           exit--;
+                       }
+                       if(exit!=1) break;
+                   }
+
+                   int last=0, lastindex=0;
+                   exit =1;
+                   for(int i=m-1; i>firstindex;i--)
+                   {
+                       if(arrRand[i]<0)
+                       {
+                           last = arrRand[i];
+                           lastindex = i;
+                           exit--;
+                       }
+                       if(exit!=1)break;
+                   }
+                   int u =0;
+                   for(int i=firstindex+1; i< lastindex; i++)
+                   {
+                       if(arrRand[i]>0)
+                       u = u + arrRand[i];
+                   }
+                   System.out.println("\nРезультат:");
+                   System.out.println("Сума елементів масива, між від'ємними числами:");
+                   System.out.print("Перше від'ємне значення:"+first+" Друге від'ємне значення:"+last+" Сума:"+u);
+                   System.out.println("\n////////////////////////////////////////////");
+                   break;
+               case 3:
+                   System.out.println("\t\t\t---Кінець---");
+                   System.out.println("////////////////////////////////////////////");
+                   break;
+               default:
+                   System.out.println("---Такого номеру завдання немає---");
+                   System.out.println("---Для повторного введення натисніть 1, для закінчення роботи натисніть 2---");
+                   System.out.print("Введіть цифру:");
+                   int i=0;
+                   i=num.nextInt();
+                   if(i==1)
+                   {
+                       run=true;
+                       Tmenu();
+                   }
+                   else
+                   {
+                       System.out.println("\t\t\t---Кінець---");
+                       System.out.println("////////////////////////////////////////////");
+                       break;
+                   }
+
+           }
+       }
+
+        }
+    }
+
