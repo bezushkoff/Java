@@ -1,0 +1,161 @@
+package com.company;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+
+    static void Tmenu()
+    {
+        System.out.println("////////////////////////////////////////////");
+        System.out.println("\t\t---Лабораторна робота №4---");
+        System.out.println("\t\t\t---Список завдань---");
+        System.out.println("---Завдання №1, для перегляду натисніть 1---");
+        System.out.println("---Завдання №2, для перегляду натисніть 2---");
+        System.out.println("---Для завершення роботи натисніть 3--");
+        System.out.println("////////////////////////////////////////////");
+        System.out.print("Введіть номер завдання:");
+    }
+
+    public static void main(String[] args) {
+        Scanner num = new Scanner(System.in);
+        int num_of_zavdanie=0;
+        Tmenu();
+        boolean run = true;
+        while(run)
+        {
+            run=false;
+            num_of_zavdanie =num.nextInt();
+            switch (num_of_zavdanie)
+            {
+                case 1:
+                    System.out.println("\t---Завдання №1---");
+                    int proverca_na_null=0;
+                    int[][] A = new int[3][4];
+                    System.out.println("Введіть таку матрицю:\n(3 -2 4 9)\n(0 3 10 3)\n(5 -4 -6 0)");
+                    for(int i = 0; i < A.length; i++)
+                    {
+                        for(int j = 0; j < A[i].length; j++)
+                        {
+                            System.out.print("Введіть елемент матриці:[" + i + "][" + j + "]:");
+                            A[i][j] = num.nextInt();
+                            if(A[i][j]==0)
+                            {
+                                proverca_na_null++;
+                            }
+                        }
+                    }
+                    num.close();
+
+                    try
+                    {
+                        if(proverca_na_null == 12)
+                        {
+                            throw new Exception("\nВведено не коректні значення!");
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        System.err.println("\nВведено не коректні значення!");
+                        break;
+                    }
+
+                    System.out.println("Вивід матриці:");
+                    Arrays.stream(A).map(Arrays::toString).forEach(System.out::println);
+
+                    System.out.println("Середнє арифметичне максимального та мінімального елементів матриці:");
+                    int max=0;
+                    int avg =0;
+                    int min= A[0][0];
+                    for(int i =0; i<A.length; i++)
+                    {
+                        for(int j=0; j<A[i].length; j++)
+                        {
+                            if(A[i][j]>max)
+                            {
+                                max=A[i][j];
+                            }
+                        }
+                    }
+
+                    for(int i =0; i<A.length; i++)
+                    {
+                        for(int j=0; j<A[i].length; j++)
+                        {
+                            if(A[i][j]<min)
+                            {
+                                min=A[i][j];
+                            }
+                        }
+                    }
+                    System.out.println("Максимальний елемент матриці: " + max);
+                    System.out.println("Мінімальне значення матриці: " + min);
+                    avg = (max + min) / 2;
+                    System.out.println("Результат: " + avg);
+                    System.out.println("////////////////////////////////////////////");
+                    break;
+                case 2:
+                    System.out.println("\t---Завдання №2---");
+                    int[][] B = new int[4][4];
+                    System.out.println("Матриця згенерується рандомно:");
+                    for(int i=0; i< B.length; i++)
+                    {
+                        for(int j=0; j<B[i].length; j++)
+                        {
+                            B[i][j] = ((int)(Math.random()*101) - (int)(Math.random()*101));
+                        }
+                    }
+                    num.close();
+                    System.out.println("Вивід матриці:");
+                    Arrays.stream(B).map(Arrays::toString).forEach(System.out::println);
+                    System.out.println("Знаходження мінімального елемента серед елементiв, якi знаходяться вище бічної дiагоналi:");
+                    int minn= B[0][0];
+                    for(int i=0; i< B.length; i++)
+                    {
+                        for(int j=0; j<B[i].length-i-1; j++)
+                        {
+
+                            if(B[i][j]<minn)
+                            {
+                                minn=B[i][j];
+                            }
+                        }
+                    }
+
+                    for(int i=0; i<4; i++)
+                    {
+                        for(int j=4-i-1; j<4; j++)
+                        {
+                            B[i][j]=0;
+                        }
+                    }
+                    System.out.println("Вигляд матриці:");
+                    Arrays.stream(B).map(Arrays::toString).forEach(System.out::println);
+                    System.out.println("Результат: " + minn);
+                    System.out.println("////////////////////////////////////////////");
+                    break;
+                case 3:
+                    System.out.println("\t\t\t---Кінець---");
+                    System.out.println("////////////////////////////////////////////");
+                    break;
+                default:
+                    System.out.println("---Такого номеру завдання немає---");
+                    System.out.println("---Для повторного введення натисніть 1, для закінчення роботи натисніть 2---");
+                    System.out.print("Введіть цифру:");
+                    int i=0;
+                    i=num.nextInt();
+                    if(i==1)
+                    {
+                        run=true;
+                        Tmenu();
+                    }
+                    else
+                    {
+                        System.out.println("\t\t\t---Кінець---");
+                        System.out.println("////////////////////////////////////////////");
+                        break;
+                    }
+            }
+        }
+    }
+}
