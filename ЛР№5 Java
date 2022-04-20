@@ -1,0 +1,207 @@
+package com.company;
+
+
+import java.io.*;
+import java.util.Locale;
+import java.util.Arrays;
+import java.util.StringJoiner;
+import java.util.Scanner;
+
+public class Main {
+
+    static void Tmenu()
+    {
+        System.out.println("////////////////////////////////////////////");
+        System.out.println("\t\t---Лабораторна робота №5---");
+        System.out.println("\t\t\t---Список завдань---");
+        System.out.println("---Завдання №1, для перегляду натисніть 1---");
+        System.out.println("---Завдання №2, для перегляду натисніть 2---");
+        System.out.println("---Завдання №3, для перегляду натисніть 3---");
+        System.out.println("---Для завершення роботи натисніть 4--");
+        System.out.println("////////////////////////////////////////////");
+        System.out.print("Введіть номер завдання:");
+    }
+
+    static void Searth_BG(String str)
+    {
+        String [] s = str.split(" ");
+        int counter =0;
+        for (int i = 0; i<s.length; i++)
+        {
+            if(s[i].toLowerCase().startsWith("а") || s[i].toLowerCase().startsWith("о") || s[i].toLowerCase().startsWith("у") || s[i].toLowerCase().startsWith("е") || s[i].toLowerCase().startsWith("и") || s[i].toLowerCase().startsWith("і"))
+            {
+                counter ++;
+            }
+        }
+        System.out.println("Знайдено слів які починаються на голосні букви: " + counter);
+    }
+
+    static void Searth_BP(String str)
+    {
+        String res = "";
+        String [] ss = str.split(" ");
+        for(int i = 0; i < ss.length; i++) {
+            int Count_p = 0;
+            Count_p = ss[i].replaceAll("[аоуеиіАОУЕИІ]", "").length();
+            if(Count_p !=0)
+                if(Count_p%2!=0)
+                {
+                    res += (ss[i] + " ");
+                }
+        }
+        System.out.println(res);
+    }
+
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        Scanner num = new Scanner(System.in);
+        Scanner sttr = new Scanner(System.in);
+        int num_of_zavdanie = 0;
+        Tmenu();
+        boolean run = true;
+        while(run)
+        {
+            run = false;
+            num_of_zavdanie = num.nextInt();
+            switch (num_of_zavdanie)
+            {
+                case 1:
+                    System.out.println("\t---Завдання №1---");
+                    System.out.println("Будь ласка, введіть слова ряду Українською мовою");
+                    System.out.print("Введення рядка:");
+                    String str = sttr.nextLine();
+
+                    try
+                    {
+                        if(str.length() < 2)
+                        {
+                            throw new Exception("");
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        System.err.println("Ряд замалий для виконання дій над ним!");
+                        break;
+                    }
+
+                    System.out.println("Введіть варіант завдання(1)/(2):");
+                    int zav = num.nextInt();
+                    if(zav == 1)
+                    {
+                        Searth_BG(str);
+                        System.out.println("Бажаєте виконати і другий варіант завдання?");
+                        System.out.println("Так - натисніть 1 Ні - натисніть 2");
+                        int zzz =num.nextInt();
+                        if(zzz == 1)
+                        {
+                            Searth_BP(str);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    else if(zav == 2)
+                    {
+                        Searth_BP(str);
+                        System.out.println("Бажаєте виконати і перший варіант завдання?");
+                        System.out.println("Так - натисніть 1 Ні - натисніть 2");
+                        int zzz =num.nextInt();
+                        if(zzz == 1)
+                        {
+                            Searth_BG(str);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        System.out.println("Такого варіанта немає");
+                    }
+                    System.out.println("\n////////////////////////////////////////////");
+                    break;
+                case 2:
+                    System.out.println("\t---Завдання №2---");
+                    File file = new File("Slova.txt");
+                    FileInputStream input = new FileInputStream(file);
+                    int length = input.available();
+
+                    byte [] data = new byte[length];
+                    input.read(data);
+
+                    String res ="";
+                    String text = new String(data);
+                    String [] s = text.split(" ");
+                    for(int i=0; i<s.length; i++)
+                    {
+                        if(s[i].toLowerCase().startsWith("s"))
+                        {
+                            res += (s[i] + " ");
+                        }
+                    }
+                    System.out.print("Результат: " + res);
+                    System.out.println("\n////////////////////////////////////////////");
+                    break;
+                case 3:
+                    System.out.println("\t---Завдання №3---");
+                    File reader = new File("PredGolosni.txt");
+                    FileInputStream input_2 = new FileInputStream(reader);
+                    int lengthh = input_2.available();
+
+                    byte [] info = new byte[lengthh];
+                    input_2.read(info);
+
+                    String Vivod = new String(info);
+                    System.out.println("Інформація яка записана в файлі: " + Vivod);
+
+                    String Vvod="";
+                    String [] vv = Vivod.split(" ");
+
+                    for(int i=0; i<vv.length; i++)
+                    {
+                        Vivod = vv[i];
+                        char ss = Vivod.charAt(Vivod.length()-2);
+//                        if(!vv[i].toLowerCase().endsWith("а") || !vv[i].toLowerCase().endsWith("о") || !vv[i].toLowerCase().endsWith("у") || !vv[i].toLowerCase().endsWith("е") || !vv[i].toLowerCase().endsWith("и") || !vv[i].toLowerCase().endsWith("і"))
+//                        {
+//                            Vvod += (vv[i] + " ");
+//                        }
+                        if(ss != 'а' && ss != 'о' && ss != 'у' && ss != 'е'&& ss != 'и'&& ss != 'і')
+                        {
+                           Vvod += (vv[i] + " ");
+                        }
+                    }
+
+                    System.out.println("Запис результату в файл...");
+                    PrintWriter writer = new PrintWriter("Test.txt");
+                    writer.write(Vvod);
+                    writer.close();
+
+                    System.out.print("Результат: " + Vvod);
+                    System.out.println("\n////////////////////////////////////////////");
+                    break;
+                case 4:
+                    System.out.println("\t\t\t---Кінець---");
+                    System.out.println("////////////////////////////////////////////");
+                    break;
+                default:
+                    System.out.println("---Такого номеру завдання немає---");
+                    System.out.println("---Для повторного введення натисніть 1, для закінчення роботи натисніть 2---");
+                    System.out.print("Введіть цифру:");
+                    int i=0;
+                    i=num.nextInt();
+                    if(i==1)
+                    {
+                        run=true;
+                        Tmenu();
+                    }
+                    else
+                    {
+                        System.out.println("\t\t\t---Кінець---");
+                        System.out.println("////////////////////////////////////////////");
+                        break;
+                    }
+            }
+        }
+    }
+}
