@@ -1,0 +1,158 @@
+package com.company;
+
+
+import java.util.Scanner;
+
+
+
+public class Main {
+
+    static void Tmenu()
+    {
+        System.out.println("////////////////////////////////////////////");
+        System.out.println("\t\t---Практична Робота №1---");
+        System.out.println("\t\t\t---Список завдань---");
+        System.out.println("---Завдання №1, для перегляду натисніть 1---");
+        System.out.println("---Завдання №2, для перегляду натисніть 2---");
+        System.out.println("---Для завершення роботи натисніть 3--");
+        System.out.println("////////////////////////////////////////////");
+        System.out.print("Введіть номер завдання:");
+    }
+
+    public static int Count_min(int [] arrRand)
+    {
+        int sum_min=0;
+        for(int j=0; j<arrRand.length; j++)
+        {
+            if(arrRand[j]<0)
+            {
+                sum_min += 1;
+            }
+        }
+        return sum_min;
+    }
+
+    public static int Sum(int [] arrRand)
+    {
+        boolean firstNegative = false;
+        int sum = 0;
+        for(int x=0; x<arrRand.length; x++)
+        {
+            if(!firstNegative && arrRand[x]<0)
+            {
+                firstNegative =true;
+                continue;
+            }
+            if(firstNegative)
+            {
+                sum += arrRand[x];
+            }
+        }
+        return sum;
+    }
+
+    public static int Nep(int [] arrRand2)
+    {
+        int result = arrRand2[0];
+        for(int x=0; x<arrRand2.length; x++)
+        {
+            if(arrRand2[x] %2 !=0 && arrRand2[x] > result)
+            {
+                result = arrRand2[x];
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Scanner num = new Scanner(System.in);
+        int num_of_zavdanie = 0;
+        Tmenu();
+        boolean run = true;
+        while (run)
+        {
+            run =false;
+            num_of_zavdanie = num.nextInt();
+            switch (num_of_zavdanie)
+            {
+                case 1:
+                    System.out.println("\t---Завдання №1---");
+                    int YOP=0;
+                    do {
+                        System.out.println("---Для коректної роботи програми розмір масиву має бути 10 і більше---");
+                        System.out.print("Введіть розмір масиву:");
+                        int sum_min = 0;
+                        int m = 0;
+                        do {
+                            m = num.nextInt();
+                            if (m <= 5)
+                                System.out.println("Введено не коректні значення!");
+                        } while (m <= 5);
+                        int[] arrRand = new int[m];
+                        for (int i = 0; i < m; i++) {
+                            arrRand[i] = ((int) (Math.random() * 101) - (int) (Math.random() * 101));
+                        }
+                        System.out.print("Вивід масиву:");
+                        for (int z = 0; z < arrRand.length; z++) {
+                            System.out.print(arrRand[z] + " ");
+                        }
+                        System.out.println("\nКількість від'ємних елементів масиву: " + Count_min(arrRand));
+                        System.out.println("Сума елементів масиву, розташованих після від'ємного елемента: " + Sum(arrRand));
+                        System.out.println("////////////////////////////////////////////");
+                        System.out.println("Бажаєте повторити це завдання?");
+                        System.out.println("Для повторення натисніть 1, для завершення натисніть 2");
+                        YOP = num.nextInt();
+                    }while (YOP==1);
+                    break;
+                case 2:
+                    System.out.println("\t---Завдання №2---");
+                    int POY=0;
+                    do {
+                        System.out.println("---Для коректної роботи програми розмір масиву має бути 10 і більше---");
+                        System.out.print("Введіть розмір масиву:");
+                        int n = 0;
+                        do {
+                            n = num.nextInt();
+                            if (n <= 5)
+                                System.out.println("Введено не коректні значення!");
+                        } while (n <= 5);
+                        int[] arrRand2 = new int[n];
+                        for (int i = 0; i < n; i++) {
+                            arrRand2[i] = ((int) (Math.random() * 101) - (int) (Math.random() * 101));
+                        }
+                        System.out.print("Вивід масиву:");
+                        for (int j = 0; j < arrRand2.length; j++) {
+                            System.out.print(arrRand2[j] + " ");
+                        }
+                        System.out.println("\nНайбільший непарний елемент: " + Nep(arrRand2));
+                        System.out.println("////////////////////////////////////////////");
+                        System.out.println("Бажаєте повторити це завдання?");
+                        System.out.println("Для повторення натисніть 1, для завершення натисніть 2");
+                        POY = num.nextInt();
+                    }while (POY==1);
+                    break;
+                case 3:
+                    System.out.println("\t\t\t---Кінець---");
+                    System.out.println("////////////////////////////////////////////");
+                    break;
+                default:
+                    System.out.println("---Такого номеру завдання немає---");
+                    System.out.println("---Для повторного введення натисніть 1, для закінчення роботи натисніть 2---");
+                    System.out.print("Введіть цифру:");
+                    int i=0;
+                    i=num.nextInt();
+                    if(i==1)
+                    {
+                        run=true;
+                        Tmenu();
+                    }
+                    else
+                    {
+                        System.out.println("\t\t\t---Кінець---");
+                        System.out.println("////////////////////////////////////////////");
+                        break;
+                    }
+            }
+        }
+    }
+}
