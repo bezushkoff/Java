@@ -1,0 +1,362 @@
+package com.example.lr9;
+
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.StringJoiner;
+
+public class HelloApplication extends Application {
+
+    //zv2
+    private TextField surname;
+    private Label res2;
+
+    //zv1
+    private TextField x1;
+    private TextField y1;
+    private TextField x2;
+    private TextField y2;
+    private TextField x3;
+    private TextField y3;
+    private Label resP;
+    private Label resS;
+
+    @Override
+    public void start(final Stage primaryStage)
+    {
+        Button button = new Button();
+        button.setText("Задвання №1");
+        button.setLayoutX(50);
+        button.setLayoutY(100);
+
+        Button button2 = new Button();
+        button2.setText("Завдання №2");
+        button2.setLayoutX(300);
+        button2.setLayoutY(100);
+
+
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Group secondaryLayout = new Group();
+                Button buttonTric = new Button();
+                buttonTric.setText("Результат");
+                buttonTric.setLayoutX(20);
+                buttonTric.setLayoutY(330);
+
+                buttonTric.setOnAction(actionEvent1 -> Calculate());
+                secondaryLayout.getChildren().add(buttonTric);
+
+                Label zav1 = new Label();
+                zav1.setText("Завданн: Обчислити периметр та площу трикутника");
+                zav1.setLayoutX(20);
+                zav1.setLayoutY(20);
+                zav1.setFont(Font.font(20));
+                zav1.setTextFill(Color.WHITE);
+                secondaryLayout.getChildren().add(zav1);
+
+                Label vediteX1 = new Label();
+                vediteX1.setText("Введіть x1:");
+                vediteX1.setLayoutX(20);
+                vediteX1.setLayoutY(80);
+                vediteX1.setFont(Font.font(20));
+                vediteX1.setTextFill(Color.WHITE);
+                secondaryLayout.getChildren().add(vediteX1);
+
+                Label vediteY1 = new Label();
+                vediteY1.setText("Введіть y1:");
+                vediteY1.setLayoutX(20);
+                vediteY1.setLayoutY(120);
+                vediteY1.setFont(Font.font(20));
+                vediteY1.setTextFill(Color.WHITE);
+                secondaryLayout.getChildren().add(vediteY1);
+
+                Label vediteX2 = new Label();
+                vediteX2.setText("Введіть x2:");
+                vediteX2.setLayoutX(20);
+                vediteX2.setLayoutY(160);
+                vediteX2.setFont(Font.font(20));
+                vediteX2.setTextFill(Color.WHITE);
+                secondaryLayout.getChildren().add(vediteX2);
+
+                Label vediteY2 = new Label();
+                vediteY2.setText("Введіть y2:");
+                vediteY2.setLayoutX(20);
+                vediteY2.setLayoutY(200);
+                vediteY2.setFont(Font.font(20));
+                vediteY2.setTextFill(Color.WHITE);
+                secondaryLayout.getChildren().add(vediteY2);
+
+                Label vediteX3 = new Label();
+                vediteX3.setText("Введіть x3:");
+                vediteX3.setLayoutX(20);
+                vediteX3.setLayoutY(240);
+                vediteX3.setFont(Font.font(20));
+                vediteX3.setTextFill(Color.WHITE);
+                secondaryLayout.getChildren().add(vediteX3);
+
+                Label vediteY3 = new Label();
+                vediteY3.setText("Введіть y3:");
+                vediteY3.setLayoutX(20);
+                vediteY3.setLayoutY(280);
+                vediteY3.setFont(Font.font(20));
+                vediteY3.setTextFill(Color.WHITE);
+                secondaryLayout.getChildren().add(vediteY3);
+
+                x1 = new TextField();
+                x1.setLayoutX(120);
+                x1.setLayoutY(80);
+                x1.setAlignment(Pos.CENTER);
+                secondaryLayout.getChildren().add(x1);
+
+                y1 = new TextField();
+                y1.setLayoutX(120);
+                y1.setLayoutY(120);
+                y1.setAlignment(Pos.CENTER);
+                secondaryLayout.getChildren().add(y1);
+
+                x2 = new TextField();
+                x2.setLayoutX(120);
+                x2.setLayoutY(160);
+                x2.setAlignment(Pos.CENTER);
+                secondaryLayout.getChildren().add(x2);
+
+                y2 = new TextField();
+                y2.setLayoutX(120);
+                y2.setLayoutY(200);
+                y2.setAlignment(Pos.CENTER);
+                secondaryLayout.getChildren().add(y2);
+
+                x3 = new TextField();
+                x3.setLayoutX(120);
+                x3.setLayoutY(240);
+                x3.setAlignment(Pos.CENTER);
+                secondaryLayout.getChildren().add(x3);
+
+                y3 = new TextField();
+                y3.setLayoutX(120);
+                y3.setLayoutY(280);
+                y3.setAlignment(Pos.CENTER);
+                secondaryLayout.getChildren().add(y3);
+
+                Label txtRez = new Label();
+                txtRez.setText("Результат:");
+                txtRez.setLayoutX(20);
+                txtRez.setLayoutY(370);
+                txtRez.setFont(Font.font(20));
+                txtRez.setTextFill(Color.WHITE);
+                secondaryLayout.getChildren().add(txtRez);
+
+                resP = new Label();
+                resP.setLayoutX(20);
+                resP.setLayoutY(400);
+                resP.setAlignment(Pos.CENTER);
+                secondaryLayout.getChildren().add(resP);
+
+                resS = new Label();
+                resS.setLayoutX(20);
+                resS.setLayoutY(430);
+                resS.setAlignment(Pos.CENTER);
+                secondaryLayout.getChildren().add(resS);
+
+                Scene secondaryScene = new Scene(secondaryLayout, 520, 470);
+                secondaryScene.setFill(Color.rgb(43,43,43));
+
+                Stage newWindow = new Stage();
+                newWindow.setTitle("Завдання №1");
+                newWindow.setScene(secondaryScene);
+
+
+                newWindow.setResizable(false);
+                newWindow.getIcons().add(new Image(("C:/Users/Max/IdeaProjects/LR9/tricutnic.jpg")));
+                newWindow.show();
+            }
+        });
+
+        button2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Group vtoroiLayout = new Group();
+                Button buttonSurname = new Button();
+                buttonSurname.setText("Результат");
+                buttonSurname.setLayoutX(200);
+                buttonSurname.setLayoutY(200);
+
+                buttonSurname.setOnAction(actionEvent1 -> CeZaCel());
+                vtoroiLayout.getChildren().add(buttonSurname);
+
+                Label zav2 = new Label();
+                zav2.setText("Завданн: Вивести ім'я студента по прізвищу");
+                zav2.setLayoutX(20);
+                zav2.setLayoutY(20);
+                zav2.setFont(Font.font(20));
+                zav2.setTextFill(Color.WHITE);
+                vtoroiLayout.getChildren().add(zav2);
+
+                Label InputSurname = new Label();
+                InputSurname.setText("Введіть прізвище студента:");
+                InputSurname.setLayoutX(20);
+                InputSurname.setLayoutY(80);
+                InputSurname.setFont(Font.font(20));
+                InputSurname.setTextFill(Color.WHITE);
+                vtoroiLayout.getChildren().add(InputSurname);
+
+                Label txtrez = new Label();
+                txtrez.setText("Результат:");
+                txtrez.setLayoutX(20);
+                txtrez.setLayoutY(120);
+                txtrez.setFont(Font.font(20));
+                txtrez.setTextFill(Color.WHITE);
+                vtoroiLayout.getChildren().add(txtrez);
+
+                surname = new TextField();
+                surname.setLayoutX(280);
+                surname.setLayoutY(80);
+                Pane pane = new Pane();
+                pane.getChildren().add(surname);
+                surname.setAlignment(Pos.CENTER);
+                vtoroiLayout.getChildren().add(pane);
+
+                res2 = new Label();
+                res2.setLayoutX(130);
+                res2.setLayoutY(120);
+                res2.setFont(Font.font(20));
+                pane.getChildren().add(res2);
+                res2.setAlignment(Pos.CENTER);
+
+                Scene vtoroiScene = new Scene(vtoroiLayout, 500,300);
+                vtoroiScene.setFill(Color.rgb(43,43,43));
+
+
+                Stage newWindow2 = new Stage();
+                newWindow2.setTitle("Завдання №2");
+                newWindow2.getIcons().add(new Image(("C:/Users/Max/IdeaProjects/LR9/Lego.jpg")));
+                newWindow2.setScene(vtoroiScene);
+                newWindow2.setResizable(false);
+                newWindow2.show();
+            }
+        });
+
+        Group object  = new Group();
+
+        Scene scene = new Scene(object, 450, 250);
+        scene.setFill((Color.rgb(60,63,65)));
+
+        Label viberiteZavdanie = new Label("---Виберіть завдання---");
+        viberiteZavdanie.setLayoutX(115);
+        viberiteZavdanie.setLayoutY(25);
+        viberiteZavdanie.setFont(Font.font(20));
+        viberiteZavdanie.setTextFill(Color.WHITE);
+        object.getChildren().add(viberiteZavdanie);
+
+        object.getChildren().add(button);
+        object.getChildren().add(button2);
+
+        primaryStage.setResizable(false);
+        primaryStage.setTitle("ЛР№9");
+        primaryStage.setScene(scene);
+        primaryStage.getIcons().add(new Image(("C:/Users/Max/IdeaProjects/LR9/Home.png")));
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    private void CeZaCel()
+    {
+        String value;
+        String TextField = surname.getText();
+
+            switch (TextField)
+            {
+                case "Безушко": case "Токар":
+                    res2.setText("Ім'я цього студента:" + " Максим");
+                    res2.setTextFill(Color.WHITE);
+                    break;
+                case "Зайцев":
+                    res2.setText("Ім'я цього студента:" + " Артем");
+                    res2.setTextFill(Color.WHITE);
+                    break;
+                case "Мадяр": case "Рацой": case "Савицький":
+                    res2.setText("Ім'я цього студента:" + " Олександр");
+                    res2.setTextFill(Color.WHITE);
+                    break;
+                case "Шемкович":
+                    res2.setText("Ім'я цього студента:" + " Сергій");
+                    res2.setTextFill(Color.WHITE);
+                    break;
+                case "Флорескул":
+                    res2.setText("Ім'я цього студента:" + " Антон");
+                    res2.setTextFill(Color.WHITE);
+                    break;
+                default:
+                    res2.setText("Введено не коректні значення!");
+                    res2.setTextFill(Color.RED);
+                    break;
+            }
+
+    }
+
+    private void Calculate()
+    {
+        int value1, value2, value3, value4, value5, value6;
+
+        String TextField1 = x1.getText();
+        String TextField2 = y1.getText();
+        String TextField3 = x2.getText();
+        String TextField4 = y2.getText();
+        String TextField5 = x3.getText();
+        String TextField6 = y3.getText();
+
+        try
+        {
+            value1 = Integer.parseInt(TextField1); //x1
+            value2 = Integer.parseInt(TextField2); //y2
+            value3 = Integer.parseInt(TextField3); //x2
+            value4 = Integer.parseInt(TextField4); //y2
+            value5 = Integer.parseInt(TextField5); //x3
+            value6 = Integer.parseInt(TextField6); //y3
+
+            double AB = (Math.sqrt(Math.pow((value3 - value1),2) + Math.pow((value4 - value2),2)));
+            double BC = (Math.sqrt(Math.pow((value5 - value3),2) + Math.pow((value6 - value4),2)));
+            double CA = (Math.sqrt(Math.pow((value5 - value1),2) + Math.pow((value6 - value2),2)));
+
+            double RP = (AB+BC+CA);
+            //double RA = (AB+BC+CA)/2;
+            double RA = (Math.abs((value3 - value1)*(value6-value2)-(value5-value1)*(value4-value2))/2);
+
+            resP.setText("Периметр =" + Math.round(RP));
+            resP.setFont(Font.font(20));
+            resP.setTextFill(Color.WHITE);
+            resS.setText("Площа =" + Math.round(RA));
+            resS.setFont(Font.font(20));
+            resS.setTextFill(Color.WHITE);
+
+        }
+        catch (Exception e)
+        {
+            resP.setFont(Font.font(20));
+            resP.setTextFill(Color.RED);
+            resP.setText("Помилка: " + "Введіть числові значення");
+            resS.setText("");
+        }
+
+    }
+
+}
