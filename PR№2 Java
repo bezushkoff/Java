@@ -1,0 +1,157 @@
+package com.example.pr2;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class HelloApplication extends Application {
+
+    private Stage prstage;
+    private Scene scene;
+    private TextField radius;
+    private TextField x;
+    private TextField y;
+    private Label res;
+    
+    private Group object = new Group();
+    
+    
+    public static void main(String[] args) {
+        launch();
+    }
+    @Override
+    public void start(Stage stage) throws IOException {
+
+        prstage = stage;
+        SetStage("Практична №2");
+    }
+
+    private void SetStage(String s) {
+        scene = new Scene(object, 450, 260);
+        scene.setFill(Color.rgb(75, 83, 188));
+        AddButton("Визначити де знаходиться точка", (int) (scene.getWidth() / 4.2) ,
+                (int) (scene.getHeight() / 1.4)).setOnAction(actionEvent -> DeTochika());
+
+        x = new TextField();
+        x.setLayoutX(150);
+        x.setLayoutY(45);
+        Pane test = new Pane();
+        test.getChildren().add(x);
+        x.setAlignment(Pos.TOP_CENTER);
+        object.getChildren().add(test);
+
+        y = new TextField();
+        y.setLayoutX(150);
+        y.setLayoutY(85);
+        Pane test1 = new Pane();
+        test.getChildren().add(y);
+        y.setAlignment(Pos.TOP_CENTER);
+        object.getChildren().add(test1);
+
+        radius = new TextField();
+        radius.setLayoutX(150);
+        radius.setLayoutY(125);
+        Pane test2 = new Pane();
+        test.getChildren().add(radius);
+        radius.setAlignment(Pos.TOP_CENTER);
+        object.getChildren().add(test2);
+
+        Label veditex = new Label("Введіть х:");
+        veditex.setLayoutX(15);
+        veditex.setLayoutY(40);
+        veditex.setFont(Font.font(20));
+        veditex.setTextFill(Color.WHITE);
+        object.getChildren().add(veditex);
+
+        Label veditey = new Label("Введіть y:");
+        veditey.setLayoutX(15);
+        veditey.setLayoutY(80);
+        veditey.setFont(Font.font(20));
+        veditey.setTextFill(Color.WHITE);
+        object.getChildren().add(veditey);
+
+        Label vediteradius = new Label("Введіть радіус:");
+        vediteradius.setLayoutX(15);
+        vediteradius.setLayoutY(120);
+        vediteradius.setFont(Font.font(20));
+        vediteradius.setTextFill(Color.WHITE);
+        object.getChildren().add(vediteradius);
+
+
+        res = new Label();
+        res.setLayoutX(15);
+        res.setLayoutY(10);
+        test.getChildren().add(res);
+        test1.getChildren().add(res);
+        test2.getChildren().add(res);
+        res.setAlignment(Pos.CENTER);
+
+        prstage.setResizable(false);
+        prstage.setTitle(s);
+        prstage.setScene(scene);
+        prstage.getIcons().add(new Image("C:/Users/Max/IdeaProjects/PR2/fas.png"));
+        prstage.show();
+    }
+
+    private void DeTochika() {
+        int xx = 1;
+        int yy = 0;
+
+        int value, value1, value2;
+
+        String TextField = x.getText();
+        String TextField1 = y.getText();
+        String TextField2 = radius.getText();
+
+        try
+        {
+            value = Integer.parseInt(TextField);
+            value1 = Integer.parseInt(TextField1);
+            value2 = Integer.parseInt(TextField2);
+
+            if((value-xx)*(value-xx)+(value1-yy)*(value1-yy)<=value2)
+            {
+                res.setFont(Font.font(20));
+                res.setTextFill(Color.WHITE);
+
+                res.setText("Результат: " + "Точка знаходиться в колі");
+
+            }
+            else
+            {
+                res.setFont(Font.font(20));
+                res.setTextFill(Color.WHITE);
+                res.setText("Результат: " + "Точка знаходиться за межами кола");
+            }
+        }
+        catch (Exception e)
+        {
+            res.setFont(Font.font(20));
+            res.setTextFill(Color.YELLOW);
+            res.setText("Помилка: " + "Введіть числові значення");
+
+        }
+
+    }
+
+    private Button AddButton(String text, int xp, int yp) {
+        Button glorp = new Button(text);
+        glorp.setLayoutX(xp);
+        glorp.setLayoutY(yp);
+        object.getChildren().add(glorp);
+        return glorp;
+    }
+}
