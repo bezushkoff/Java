@@ -1,0 +1,176 @@
+package com.company;
+
+import java.io.*;
+import java.util.*;
+
+class notebook implements Serializable
+{
+    private String Surname;
+    private String Name;
+    private String Address;
+    private int Number_of_Phone;
+    private String Email;
+    public static List<notebook> Pbook = new ArrayList<>();
+    public static List<notebook> sorted = new ArrayList<>();
+
+    public notebook(){}
+
+    public notebook(notebook n) throws IOException, FileNotFoundException
+    {
+        this.Surname = n.Surname;
+        this.Name = n.Name;
+        this.Address = n.Address;
+        this.Number_of_Phone = n.Number_of_Phone;
+        this.Email = n.Email;
+        Pbook.add(this);
+        FileOutputStream writeData = new FileOutputStream("notebook.txt");
+        ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
+        writeStream.writeObject(Pbook);
+        writeStream.flush();
+        writeStream.close();
+    }
+
+    public static notebook AddNotebook()
+    {
+        Scanner str = new Scanner(System.in);
+        Scanner numm = new Scanner(System.in);
+        notebook n = new notebook();
+        try
+        {
+            System.out.println("\tВведіть прізвище: ");
+            n.Surname = str.nextLine();
+            System.out.println("\tВведіть ім'я: ");
+            n.Name = str.nextLine();
+            System.out.println("\tВведіть адрес: ");
+            n.Address = str.nextLine();
+            System.out.println("\tВведіть номер телефона: ");
+            n.Number_of_Phone = numm.nextInt();
+            System.out.println("\tВведіть пошту: ");
+            n.Email = str.nextLine();
+        }
+        catch (Exception e)
+        {
+            System.out.println("Введене некоректні значення!!!");
+            System.out.println("Повторіть спробу!!!");
+            return AddNotebook();
+        }
+        return n;
+    }
+
+
+    public static void DeleteNotebook() throws IOException
+    {
+        System.out.println("Введіть номер запису: ");
+        int numm= new Scanner(System.in).nextInt();
+
+        if(numm > Pbook.size())
+        {
+            System.out.println("Номер за межами массиву!");
+            DeleteNotebook();
+            return;
+        }
+        Pbook.remove(numm-1);
+        FileOutputStream writeData = new FileOutputStream("notebook.txt");
+        ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
+        writeStream.writeObject(Pbook);
+        writeStream.flush();
+        writeStream.close();
+    }
+
+    public static void FileRead() throws IOException, ClassNotFoundException{
+        try {
+            FileInputStream fis = new FileInputStream("notebook.txt");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            Pbook = (List) ois.readObject();
+            ois.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+   public void OutputNotebook()
+   {
+       System.out.println("\tПрізвище: " + Surname);
+       for(String s: Arrays.asList("\tІм'я: " + Name, "\tАдреса: " + Address, "\tНомер телефона: " + Number_of_Phone, "\tПошта: " + Email))
+       {
+           System.out.println(s);
+       }
+       System.out.println();
+   }
+
+   public static void OutputAllNotebook(List<notebook> array)
+   {
+       System.out.println("Кількість записів: " + array.size());
+       for (int i =0; i< array.size(); i++)
+       {
+           array.get(i).OutputNotebook();
+       }
+   }
+
+   public static void SortNotebook()
+   {
+       sorted.addAll(Pbook);
+       sorted.sort(Comparator.comparing(w -> w.Surname));
+   }
+
+   public static void SearchNotebook()
+   {
+       String key_email;
+       System.out.print("Введіть електронну пошту: ");
+       key_email = new Scanner(System.in).nextLine();
+       for(int i=0; i< Pbook.size(); i++)
+       {
+           if(Pbook.get(i).Email.equals(key_email))
+           {
+               Pbook.get(i).OutputNotebook();
+           }
+       }
+   }
+
+}
+
+
+public class Main {
+
+    public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
+        Scanner num = new Scanner(System.in);
+        int num_of_zavdanie = 0;
+        do{
+            System.out.println("////////////////////////////////////////////");
+            System.out.println("---Натисніть 1 - для введення інформації про користувача---");
+            System.out.println("---Натисніть 2 - для виведення інформації про користувача---");
+            System.out.println("---Натисніть 3 - для виведення відсортованої інформації за прізвищем---");
+            System.out.println("---Натисніть 4 - для пошуку за поштою---");
+            System.out.println("---Натисніть 5 - для видалення запису---");
+            System.out.println("---Натисніть 6 - для завершення роботи---");
+            System.out.println("////////////////////////////////////////////");
+            System.out.print("Введіть номер завдання:");
+
+            num_of_zavdanie = num.nextInt();
+            switch (num_of_zavdanie){
+                case 1:
+                    notebook _notebook = new notebook(notebook.AddNotebook());
+                    break;
+                case 2:
+                    notebook.FileRead();
+                    notebook.OutputAllNotebook(notebook.Pbook);
+                    break;
+                case 3:
+                    notebook.SortNotebook();
+                    notebook.OutputAllNotebook(notebook.sorted);
+                    break;
+                case 4:
+                    notebook.SearchNotebook();
+                    break;
+                case 5:
+                    notebook.DeleteNotebook();
+                    break;
+                case 6:
+                    System.out.println("\t\t\t---Кінець---");
+                    System.out.println("////////////////////////////////////////////");
+                    return;
+            }
+
+        }while (num_of_zavdanie !=6);
+    }
+}
