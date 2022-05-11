@@ -1,0 +1,166 @@
+package com.company;
+
+import java.util.*;
+
+class Enterprise {
+    private int Month;
+    private int Plan_Vypusku;
+    private int Fakt_Vypusk;
+    public static List<Enterprise> enterpriseList = new ArrayList<>();
+
+
+    public Enterprise(Enterprise ea) {
+        this.Month = ea.Month;
+        this.Plan_Vypusku = ea.Plan_Vypusku;
+        this.Fakt_Vypusk = ea.Fakt_Vypusk;
+        enterpriseList.add(this);
+    }
+
+    public Enterprise(int month, int plan_Vypusku, int fakt_Vypusk) {
+        Month = month;
+        Plan_Vypusku = plan_Vypusku;
+        Fakt_Vypusk = fakt_Vypusk;
+        enterpriseList.add(this);
+    }
+
+    public Enterprise() {
+    }
+
+    public static Enterprise AddEnterprise() {
+        Scanner en = new Scanner(System.in);
+        Enterprise e = new Enterprise();
+        try {
+            System.out.print("\t\tМісяць: ");
+            e.Month = en.nextInt();
+            if(e.Month>12 || e.Month<1)
+            {
+                System.out.println("Введене некоректні значення!");
+                System.out.println("Повторіть спробу!");
+                return AddEnterprise();
+            }
+            System.out.print("\t\tПлан випуску продукції: ");
+            e.Plan_Vypusku = en.nextInt();
+            if(e.Plan_Vypusku<1)
+            {
+                System.out.println("Введене некоректні значення!");
+                System.out.println("Повторіть спробу!");
+                return AddEnterprise();
+            }
+            System.out.print("\t\tФактичний випуск продукції: ");
+            e.Fakt_Vypusk = en.nextInt();
+            if(e.Fakt_Vypusk<1)
+            {
+                System.out.println("Введене некоректні значення!");
+                System.out.println("Повторіть спробу!");
+                return AddEnterprise();
+            }
+        } catch (Exception ex) {
+            System.out.println("Введене некоректні значення!");
+            System.out.println("Повторіть спробу!");
+            return AddEnterprise();
+        }
+        return e;
+    }
+
+    private void OutputInfo() {
+        System.out.println("| Mісяць: " + Month + " | План випуску продукції: " + Plan_Vypusku + " | Фактичний випуск продукції: " + Fakt_Vypusk + " |");
+    }
+
+    public static void PrintEnterprise(List<Enterprise> m) {
+        System.out.println("Кількість записів: " + m.size());
+        System.out.println("------------------------------Вивід таблиці------------------------------");
+        for (int i = 0; i < m.size(); i++) {
+            m.get(i).OutputInfo();
+        }
+        System.out.println("-------------------------------------------------------------------------");
+    }
+
+    public void MIN()
+    {
+        List<Enterprise> list = new ArrayList<>(enterpriseList);
+        int min = list.get(0).Fakt_Vypusk;
+        int minres = 0;
+        for (int i = 0; i < list.size(); i++)
+        {
+            if (min >= list.get(i).Fakt_Vypusk)
+            {
+                min = list.get(i).Fakt_Vypusk;
+                minres = list.get(i).Month;
+            }
+        }
+        System.out.println("| Місяць з найменшим виконанням роботи: " + minres + " |");
+    }
+
+    public void MAX()
+    {
+        List<Enterprise> list = new ArrayList<>(enterpriseList);
+        int max = list.get(0).Fakt_Vypusk;
+        int maxres =0;
+        for(int j=0; j<list.size(); j++)
+        {
+            if(max <= list.get(j).Fakt_Vypusk)
+            {
+                max = list.get(j).Fakt_Vypusk;
+                maxres = list.get(j).Month;
+            }
+        }
+        System.out.println("| Місяць з найбільшим виконанням роботи: " + maxres + "|");
+        System.out.println("-------------------------------------------");
+    }
+
+    public static int max()
+    {
+        List<Enterprise> list = new ArrayList<>(enterpriseList);
+        int max = list.get(0).Fakt_Vypusk;
+        int maxres =0;
+        for(int j=0; j<list.size(); j++)
+        {
+            if(max <= list.get(j).Fakt_Vypusk)
+            {
+                max = list.get(j).Fakt_Vypusk;
+                maxres = list.get(j).Month;
+            }
+        }
+        return maxres;
+    }
+
+}
+
+public class Main {
+
+
+    public static void main(String[] args) {
+        Scanner num = new Scanner(System.in);
+        int num_of_zavdanie = 0;
+        do {
+            System.out.println("////////////////////////////////////////////");
+            System.out.println("---Натисніть 1 - для введення інформації про результат роботи підприємства---");
+            System.out.println("---Натисніть 2 - для виведення інформації про результат роботи підприємства---");
+            System.out.println("---Натисніть 3 - для виведення місяців з мінімальним та максимальним виконанням роботи---");
+            System.out.println("---Натисніть 4 - для завершення роботи---");
+            System.out.println("////////////////////////////////////////////");
+            System.out.print("Введіть номер завдання:");
+
+            num_of_zavdanie = num.nextInt();
+            switch (num_of_zavdanie) {
+                case 1:
+                    Enterprise enterprise = new Enterprise(Enterprise.AddEnterprise());
+                    break;
+                case 2:
+                    Enterprise.PrintEnterprise(Enterprise.enterpriseList);
+                    break;
+                case 3:
+                    System.out.println("-----------------Результат-----------------");
+                    Enterprise ee = new Enterprise();
+                    ee.MIN();
+                    ee.MAX();
+                    break;
+                case 4:
+                    System.out.println("\t\t\t---Кінець---");
+                    System.out.println("////////////////////////////////////////////");
+                    return;
+            }
+        } while (num_of_zavdanie != 4);
+    }
+}
+
