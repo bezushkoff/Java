@@ -1,0 +1,211 @@
+package com.company;
+
+
+import java.awt.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
+import static com.company.CarAndClient.list;
+
+interface BAZA{
+
+    void PrintObject();
+    void Output();
+    static void AddObject(){}
+    static void PrintAllObject(){}
+    static void FileRead(){}
+    static void Remove(){}
+}
+
+class CarAndClient implements BAZA, Serializable{
+
+    private String car_brand;
+    private int number_of_car;
+    private String color_of_car;
+    private String Name;
+    private String Surname;
+    private int Age;
+    private String City;
+    public static List<CarAndClient> list =new ArrayList<>();
+
+    public CarAndClient(String car_brand, int number_of_car, String color_of_car, String Name, String Surname, int Age, String City) throws IOException, FileNotFoundException
+    {
+        this.car_brand = car_brand;
+        this.number_of_car = number_of_car;
+        this.color_of_car = color_of_car;
+        this.Name = Name;
+        this.Surname = Surname;
+        this.Age = Age;
+        this.City = City;
+        list.add(this);
+        FileOutputStream writeData = new FileOutputStream("carandclient.txt");
+        ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
+        writeStream.writeObject(list);
+        writeStream.flush();
+        writeStream.close();
+    }
+
+    public CarAndClient(){}
+
+    public  static void AddObject()
+    {
+        Scanner sss = new Scanner(System.in);
+        Scanner numm = new Scanner(System.in);
+        try{
+            System.out.println("\tМарка автомобіля: ");
+            String brand = sss.nextLine();
+            System.out.println("\tНомер автомобіля: ");
+            int number = numm.nextInt();
+            if(number <= 0)
+            {
+                System.out.println("Ви вийшли за межі!");
+                AddObject();
+            }
+            System.out.println("\tКолір автомобіля: ");
+            String color = sss.nextLine();
+            System.out.println("\tІм'я: ");
+            String name = sss.nextLine();
+            System.out.println("\tПрізвище: ");
+            String surname = sss.nextLine();
+            System.out.println("\tВік: ");
+            int age = numm.nextInt();
+            if(age <=17 || age >100)
+            {
+                System.out.println("Ви вийшли за межі!");
+                AddObject();
+            }
+            System.out.println("\tМісто: ");
+            String city = sss.nextLine();
+            CarAndClient c = new CarAndClient(brand, number, color, name, surname, age, city);
+        }catch (Exception ex)
+        {
+            System.out.println("Введено не коретні дані!!!");
+            System.out.println("Повторіть спробу!!!");
+            AddObject();
+        }
+    }
+
+    @Override
+    public void PrintObject()
+    {
+        System.out.println("| Марка: " + car_brand + " | Номер: " + number_of_car + " | Колір: " + color_of_car + " | Ім'я: " + Name + " | Прізвище: " + Surname + " | Вік: " + Age + " | Місто: " + City + " |");
+    }
+
+    public static void PrintAllObject()
+    {
+        System.out.println("Кількість записів: " + list.size());
+        System.out.println("---------------------------------------Вивід таблиці----------------------------------------");
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).PrintObject();
+        }
+        System.out.println("--------------------------------------------------------------------------------------------");
+    }
+
+    public static void FileRead() throws IOException, ClassNotFoundException{
+        try {
+            FileInputStream fis = new FileInputStream("carandclient.txt");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            list = (List) ois.readObject();
+            ois.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public static void Remove() throws IOException
+    {
+        System.out.println("Введіть номер запису: ");
+        int numm= new Scanner(System.in).nextInt();
+
+        if(numm > list.size())
+        {
+            System.out.println("Номер за межами массиву!");
+            Remove();
+            return;
+        }
+        list.remove(numm-1);
+        FileOutputStream writeData = new FileOutputStream("carandclient.txt");
+        ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
+        writeStream.writeObject(list);
+        writeStream.flush();
+        writeStream.close();
+    }
+
+    @Override public void Output() {
+        System.out.println();
+        System.out.println("\tІм'я: " + Name);
+        for(String s: Arrays.asList("\tПрізвище: " + Surname, "\tВік: " + Age, "\tМісто: " + City))
+        {
+            System.out.println(s);
+        }
+        System.out.println();
+    }
+
+    public static void Zav(List<CarAndClient> list2)
+    {
+        Scanner aaa = new Scanner(System.in);
+        String key_brand;
+        String key_color;
+        System.out.print("Введіть марку: ");
+        key_brand = aaa.nextLine();
+        System.out.print("Введіть колір: ");
+        key_color = aaa.nextLine();
+
+
+        for(int i=0; i<list2.size(); i++)
+        {
+            if(list2.get(i).car_brand.equals(key_brand) && list2.get(i).color_of_car.equals(key_color))
+            {
+                list2.get(i).Output();
+            }
+        }
+    }
+
+
+}
+
+
+
+public class Main {
+
+    public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
+        Scanner num = new Scanner(System.in);
+        int num_of_zavdanie = 0;
+        do{
+            System.out.println("////////////////////////////////////////////");
+            System.out.println("---Натисніть 1 - для введення інформації про автомобіль та користувача---");
+            System.out.println("---Натисніть 2 - для виведення інформації про автомобіль та користувача---");
+            System.out.println("---Натисніть 3 - для виведення інформації про власників автомобіля заданого кольору та заданої марки---");
+            System.out.println("---Натисніть 4 - для видалення запису---");
+            System.out.println("---Натисніть 5 - для завершення роботи---");
+            System.out.println("////////////////////////////////////////////");
+            System.out.print("Введіть номер завдання:");
+
+            num_of_zavdanie = num.nextInt();
+            switch (num_of_zavdanie){
+                case 1:
+                    CarAndClient.AddObject();
+                    break;
+                case 2:
+                    CarAndClient.FileRead();
+                    CarAndClient.PrintAllObject();
+                    break;
+                case 3:
+                    CarAndClient.Zav(list);
+                    break;
+                case 4:
+                    CarAndClient.Remove();
+                    break;
+                case 5:
+                    System.out.println("\t\t\t---Кінець---");
+                    System.out.println("////////////////////////////////////////////");
+                    return;
+            }
+
+        }while (num_of_zavdanie !=5);
+
+    }
+}
