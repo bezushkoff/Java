@@ -1,0 +1,240 @@
+package com.company;
+
+import javax.swing.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
+import static com.company.DayE.dayList;
+
+interface BAZA{
+    static int Sum(List<DayE> day2) {return 0;}
+    static int Max(List<DayE> day3) {return 0;}
+    static void Remove(){}
+    static void FileRide(){}
+    void Output();
+
+}
+
+abstract class Exhibition implements BAZA, Serializable
+{
+    protected String name_exhibition;
+    protected  String surname_sculptor;
+    public Exhibition(){}
+}
+
+class DayE extends Exhibition implements BAZA, Serializable
+{
+    private int number_of_visitors;
+    private String comment;
+    public static List<DayE> dayList = new ArrayList<>();
+    public static List<DayE> dayList1 = new ArrayList<>();
+
+    public DayE(){}
+
+    public DayE(DayE e) throws IOException{
+        this.name_exhibition = e.name_exhibition;
+        this.surname_sculptor = e.surname_sculptor;
+        this.number_of_visitors = e.number_of_visitors;
+        this.comment = e.comment;
+        dayList.add(this);
+        FileOutputStream writeData = new FileOutputStream("visitors.txt");
+        ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
+        writeStream.writeObject(dayList);
+        writeStream.flush();
+        writeStream.close();
+    }
+
+    public DayE(String _name_exhibition, String _surname_sculptor, int _number_of_visitors, String _comment)
+    {
+        name_exhibition = _name_exhibition;
+        surname_sculptor = _surname_sculptor;
+        number_of_visitors = _number_of_visitors;
+        comment = _comment;
+    }
+
+    public static DayE AddD(){
+        Scanner str = new Scanner(System.in);
+        Scanner numm = new Scanner(System.in);
+        DayE d = new DayE();
+        try {
+            System.out.println("\tВведіть назву виставки: ");
+            d.name_exhibition = str.nextLine();
+            System.out.println("\tВвдіть прізвище скульптора: ");
+            d.surname_sculptor = str.nextLine();
+            System.out.println("\tВведіть кількість відвідувачів: ");
+            d.number_of_visitors = numm.nextInt();
+            if(d.number_of_visitors < 0 || d.number_of_visitors == 0)
+            {
+                System.out.println("Введене некоректні значення!!!");
+                System.out.println("Повторіть спробу!!!");
+                return AddD();
+            }
+            System.out.println("\tВведіть коментар: ");
+            d.comment = str.nextLine();
+        }catch (Exception ex)
+        {
+            System.out.println("Введене некоректні значення!!!");
+            System.out.println("Повторіть спробу!!!");
+            return AddD();
+        }
+        return d;
+    }
+
+    public static void FileRead() throws IOException, ClassNotFoundException{
+        try {
+            FileInputStream fis = new FileInputStream("visitors.txt");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            dayList = (List) ois.readObject();
+            ois.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public static void Output(List<DayE> array){
+        System.out.println("Кількість зписів: " + array.size());
+        System.out.println();
+        for(int i=0; i<array.size(); i++)
+        {
+            array.get(i).Output();
+        }
+    }
+    @Override
+    public void Output() {
+        System.out.println("\tНазва виставки: " + name_exhibition);
+        for(String s: Arrays.asList("\tПрізвище скульптора: " + surname_sculptor, "\tКількість відвідувачів: " + number_of_visitors, "\tКоментар: " + comment))
+        {
+            System.out.println(s);
+        }
+        System.out.println();
+    }
+
+
+    public static int Sum(List<DayE> day2)
+    {
+        int sum=0;
+        for(int i=0; i<day2.size(); i++)
+        {
+            sum+=day2.get(i).number_of_visitors;
+        }
+        System.out.println("Загальна кількість відвідувачів: " + sum);
+        return sum;
+    }
+
+    public static int Max(List<DayE> day3)
+    {
+        int max = day3.get(0).number_of_visitors;
+        for(int i=0; i<day3.size(); i++)
+        {
+            if(day3.get(i).number_of_visitors>max)
+            {
+                max = day3.get(i).number_of_visitors;
+            }
+        }
+        for(int k=0; k<day3.size(); k++)
+        {
+            if(day3.get(k).number_of_visitors==max)
+            {
+                System.out.println();
+                day3.get(k).Output();
+            }
+        }
+        System.out.println("День з найменшою кількістю відвідувачів: " + max);
+        return max;
+    }
+
+    public static void Search()
+    {
+        String key_comment;
+        System.out.print("\t---Результат---");
+        key_comment = dayList.get(0).comment;
+        System.out.println();
+        for(int i=0; i<dayList.size(); i++)
+        {
+            if(dayList.get(i).comment.length() >= key_comment.length())
+            {
+                key_comment = dayList.get(i).comment;
+            }
+        }
+        for(int k=0; k<dayList.size(); k++)
+        {
+            if(dayList.get(k).comment==key_comment)
+            {
+                System.out.println();
+                dayList.get(k).Output();
+            }
+        }
+    }
+
+    public static  void Remove() throws IOException{
+        System.out.println("Введіть номер записсу:");
+        int n = new Scanner(System.in).nextInt();
+        if(n> dayList.size())
+        {
+            System.out.println("Ноиер за межами массиву!");
+            Remove();
+            return;
+        }
+        dayList.remove(n-1);
+        FileOutputStream writeData = new FileOutputStream("visitors.txt");
+        ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
+        writeStream.writeObject(dayList);
+        writeStream.flush();
+        writeStream.close();
+    }
+
+
+}
+
+public class Main {
+
+    public static void main(String[] args) throws IOException, FileNotFoundException ,ClassNotFoundException {
+
+        Scanner num = new Scanner(System.in);
+        int num_of_zavdanie = 0;
+        do{
+            System.out.println("////////////////////////////////////////////");
+            System.out.println("---Натисніть 1 - для введення інформації про виставку---");
+            System.out.println("---Натисніть 2 - для виведення інформації про виставку---");
+            System.out.println("---Натисніть 3 - для виведення загальної кількості відвідувачів---");
+            System.out.println("---Натисніть 4 - для виведення дня з найбільшою кількістю відвідувачів---");
+            System.out.println("---Натисніть 5 - для виведення дня з найбільшою кількістю слів у коментарі---");
+            System.out.println("---Натисніть 6 - для видалення запису---");
+            System.out.println("---Натисніть 7 - для завершення роботи---");
+            System.out.println("////////////////////////////////////////////");
+            System.out.print("Введіть номер завдання:");
+
+            num_of_zavdanie = num.nextInt();
+            switch (num_of_zavdanie){
+                case 1:
+                    DayE _DayE = new DayE(DayE.AddD());
+                    break;
+                case 2:
+                    DayE.FileRead();
+                    DayE.Output(dayList);
+                    break;
+                case 3:
+                    DayE.Sum(dayList);
+                    break;
+                case 4:
+                    DayE.Max(dayList);
+                    break;
+                case 5:
+                    DayE.Search();
+                    break;
+                case 6:
+                    DayE.Remove();
+                    break;
+                case 7:
+                    System.out.println("\t\t\t---Кінець---");
+                    System.out.println("////////////////////////////////////////////");
+                    return;
+            }
+
+        }while (num_of_zavdanie !=7);
+
+    }
+}
